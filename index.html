@@ -5,36 +5,112 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Portfolio</title>
   <style>
-  body{margin:0;background:#0b0b0b;color:#fff;font-family:system-ui,-apple-system,Segoe UI,Arial}
-  header{padding:18px 14px;display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap}
-  a.btn{background:#6d4cff;color:#fff;text-decoration:none;padding:10px 12px;border-radius:12px}
-
-  /* new */
-  .wrap{display:flex;justify-content:center;padding:12px 12px 18px}
-  .phone{
-    width:min(420px, 100%);
-    aspect-ratio: 9 / 19.5;        /* شكل شاشة جوال */
-    border-radius:18px;
-    overflow:hidden;
-    box-shadow:0 0 0 1px rgba(255,255,255,.08);
-  }
-  .pdf{width:100%;height:100%;border:0}
-</style>
-
+    body{
+      margin:0;
+      background:#0b0b0b;
+      color:#fff;
+      font-family:system-ui,-apple-system,Segoe UI,Arial;
+    }
+    header{
+      padding:18px 14px;
+      display:flex;
+      gap:10px;
+      align-items:center;
+      justify-content:space-between;
+      flex-wrap:wrap;
+    }
+    .title{font-weight:600;letter-spacing:.2px}
+    .actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+    a.btn{
+      background:#6d4cff;
+      color:#fff;
+      text-decoration:none;
+      padding:10px 12px;
+      border-radius:12px;
+      display:inline-block;
+      font-weight:600;
+      font-size:14px;
+    }
+    a.btn.secondary{
+      background:rgba(255,255,255,.10);
+      font-weight:500;
+    }
+    .wrap{
+      padding:0 14px 18px;
+      line-height:1.9;
+      opacity:.92;
+    }
+    .row{
+      margin-top:10px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+    .hint{
+      margin-top:12px;
+      font-size:13px;
+      opacity:.8;
+    }
+    .divider{
+      margin:14px 0;
+      height:1px;
+      background:rgba(255,255,255,.08);
+    }
+    code{
+      background:rgba(255,255,255,.08);
+      padding:2px 6px;
+      border-radius:8px;
+    }
+  </style>
 </head>
+
 <body>
   <header>
-    <div>Portfolio</div>
-    <div style="display:flex;gap:10px;flex-wrap:wrap">
-      <a class="btn" href="portfolio.pdf" target="_blank">فتح الملف</a>
-      <a class="btn" href="portfolio.pdf" download>تحميل PDF</a>
+    <div class="title">بورتفوليو</div>
+
+    <div class="actions">
+      <!-- فتح تلقائي "ملائم" (أفضل تجربة) -->
+      <a class="btn" href="portfolio.pdf#page=1&view=FitH" target="_blank" rel="noopener">
+        فتح الملف (ملائم)
+      </a>
+
+      <!-- تحميل -->
+      <a class="btn secondary" href="portfolio.pdf" download>
+        تحميل PDF
+      </a>
     </div>
   </header>
 
-<div class="wrap">
-  <div class="phone">
-    <iframe class="pdf" src="portfolio.pdf"></iframe>
-  </div>
-</div>
-</body>
-</html>
+  <div class="wrap">
+    <div>
+      افتحي البورتفوليو بزر <strong>“فتح الملف (ملائم)”</strong> عشان ينفتح مباشرة بوضع ملاءمة للعرض.
+      وبعدها تقدري تغيّري الزوم/الملاءمة من أدوات الـPDF داخل المتصفح.
+    </div>
+
+    <div class="divider"></div>
+
+    <div><strong>تغيير سريع (اختياري):</strong></div>
+    <div class="row">
+      <!-- فتح عادي بدون إعدادات -->
+      <a class="btn secondary" href="portfolio.pdf#page=1" target="_blank" rel="noopener">
+        فتح عادي
+      </a>
+
+      <!-- ملاءمة العرض (Fit Width تقريبًا) -->
+      <a class="btn secondary" href="portfolio.pdf#page=1&view=FitH" target="_blank" rel="noopener">
+        ملاءمة العرض
+      </a>
+
+      <!-- ملاءمة الصفحة (Fit Page) -->
+      <a class="btn secondary" href="portfolio.pdf#page=1&view=Fit" target="_blank" rel="noopener">
+        ملاءمة الصفحة
+      </a>
+
+      <!-- زوم ثابت -->
+      <a class="btn secondar
