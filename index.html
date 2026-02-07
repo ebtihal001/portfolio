@@ -5,24 +5,329 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Portfolio</title>
   <style>
-    body{margin:0;background:#0b0b0b;color:#fff;font-family:system-ui,-apple-system,Segoe UI,Arial}
-    header{padding:18px 14px;display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap}
-    a.btn{background:#6d4cff;color:#fff;text-decoration:none;padding:10px 12px;border-radius:12px}
-    .wrap{padding:0 12px 14px}
-    .pdf{width:100%;height:88vh;border:0;border-radius:14px;overflow:hidden}
+    :root{
+      --bg:#0b0b0b; --panel:rgba(20,20,20,.92);
+      --line:rgba(255,255,255,.10); --txt:#fff; --muted:rgba(255,255,255,.75);
+      --brand:#6d4cff;
+    }
+    body{margin:0;background:var(--bg);color:var(--txt);font-family:system-ui,-apple-system,Segoe UI,Arial}
+    .bar{
+      position:sticky;top:0;z-index:50;
+      display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;
+      padding:10px 12px;background:rgba(11,11,11,.92);backdrop-filter:blur(10px);
+      border-bottom:1px solid var(--line);
+    }
+    .left{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+    .title{font-weight:700;letter-spacing:.2px}
+    .meta{font-size:12px;color:var(--muted)}
+    .right{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+    button,a.btn{
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.08);
+      color:var(--txt);
+      padding:8px 10px;border-radius:12px;
+      font-size:13px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px;
+    }
+    button.primary,a.btn.primary{background:var(--brand);border-color:transparent;font-weight:700}
+    button.active{outline:2px solid rgba(109,76,255,.65)}
+    button:disabled{opacity:.5;cursor:not-allowed}
+    .viewer{
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 14px 12px 90px;
+    }
+    .page{
+      position:relative;
+      margin: 0 auto 14px;
+      background:#111;
+      border:1px solid var(--line);
+      border-radius:16px;
+      overflow:hidden;
+    }
+    canvas{display:block;width:100%;height:auto}
+    .linkLayer{position:absolute;inset:0}
+    .linkLayer a{
+      position:absolute;
+      /* لا نضع خلفية كي لا تشوّه التصميم */
+      text-decoration:none;
+    }
+    .notice{
+      position:fixed;left:12px;right:12px;bottom:12px;z-index:60;
+      background:var(--panel);
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:10px 12px;
+      color:var(--txt);
+      display:flex;gap:10px;align-items:flex-start;justify-content:space-between;
+      max-width: 980px; margin:0 auto;
+    }
+    .notice p{margin:0;font-size:12.5px;line-height:1.6;color:var(--muted)}
+    .notice b{color:var(--txt)}
+    .x{background:transparent;border:0;color:var(--txt);opacity:.8;font-size:16px;cursor:pointer;padding:4px 6px}
+    .loading{
+      padding:18px 12px;
+      color:var(--muted);
+      text-align:center;
+      font-size:13px;
+    }
   </style>
 </head>
 <body>
-  <header>
-    <div>بورتفوليو</div>
-    <div style="display:flex;gap:10px;flex-wrap:wrap">
-      <a class="btn" href="portfolio.pdf" target="_blank">فتح الملف</a>
-      <a class="btn" href="portfolio.pdf" download>تحميل PDF</a>
-    </div>
-  </header>
 
-  <div class="wrap">
-    <iframe class="pdf" src="portfolio.pdf#view=FitH&zoom=page-width"></iframe>
+  <div class="bar">
+    <div class="left">
+      <div class="title">Portfolio</div>
+      <div class="meta" id="pageMeta">—</div>
+    </div>
+
+    <div class="right">
+      <button id="fitPageBtn" class="active" title="ملاءمة الصفحة">ملاءمة الصفحة</button>
+      <button id="fitWidthBtn" title="ملاءمة العرض">ملاءمة العرض</button>
+      <button id="zoomOutBtn" title="تصغير">−</button>
+      <button id="zoomInBtn" title="تكبير">+</button>
+
+      <!-- أقصى ما يمكن للـ Acrobat: تنزيل/فتح ثم مشاركة -> Acrobat (لا يمكن فرضه من الويب) -->
+      <a class="btn" id="openRawBtn" href="portfolio.pdf" target="_blank" rel="noopener">فتح الملف</a>
+      <a class="btn" href="portfolio.pdf" download>تحميل</a>
+    </div>
   </div>
+
+  <div class="viewer" id="viewer">
+    <div class="loading" id="loading">جارٍ تحميل الملف…</div>
+  </div>
+
+  <div class="notice" id="notice">
+    <p>
+      يفتح العرض افتراضيًا على <b>ملاءمة الصفحة</b> ويظل ثابتًا أثناء الانتقال.
+      إذا بدا التكبير غير ملائم، اضغطي زر <b>«ملاءمة الصفحة»</b> أعلى الشاشة.
+      <br>
+      ملاحظة: تعمل الروابط الخارجية والتنقل الداخلي هنا إذا كانت <b>روابط</b> داخل الـPDF (وليس أزرار نماذج).
+      وللتفاعل الكامل عبر تطبيق Acrobat على iOS يمكن استخدام <b>المشاركة</b> ثم اختيار <b>Acrobat</b>. :contentReference[oaicite:1]{index=1}
+    </p>
+    <button class="x" aria-label="إغلاق" onclick="document.getElementById('notice').style.display='none'">✕</button>
+  </div>
+
+  <script type="module">
+    import * as pdfjsLib from "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/5.4.149/pdf.min.mjs";
+    pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/5.4.149/pdf.worker.min.mjs";
+
+    const PDF_URL = new URL("portfolio.pdf", location.href).href;
+
+    const viewer = document.getElementById("viewer");
+    const loading = document.getElementById("loading");
+    const pageMeta = document.getElementById("pageMeta");
+
+    const fitPageBtn = document.getElementById("fitPageBtn");
+    const fitWidthBtn = document.getElementById("fitWidthBtn");
+    const zoomOutBtn = document.getElementById("zoomOutBtn");
+    const zoomInBtn = document.getElementById("zoomInBtn");
+
+    let pdfDoc = null;
+    let mode = "page-fit";     // "page-fit" | "page-width" | "manual"
+    let baseScale = 1;         // scale المحسوب من الملاءمة
+    let userZoom = 1;          // معامل تكبير/تصغير إضافي
+    let rendering = false;
+
+    function setActiveButtons(){
+      fitPageBtn.classList.toggle("active", mode === "page-fit");
+      fitWidthBtn.classList.toggle("active", mode === "page-width");
+    }
+
+    function toolbarHeight(){
+      const bar = document.querySelector(".bar");
+      return bar ? bar.getBoundingClientRect().height : 56;
+    }
+
+    function computeBaseScale(viewportAt1){
+      const padding = 24;
+      const w = Math.max(320, viewer.clientWidth) - padding;
+      const h = Math.max(320, window.innerHeight - toolbarHeight()) - padding;
+
+      const wScale = w / viewportAt1.width;
+      const hScale = h / viewportAt1.height;
+
+      if (mode === "page-width") return wScale;
+      // page-fit
+      return Math.min(wScale, hScale);
+    }
+
+    function clamp(n,min,max){ return Math.max(min, Math.min(max,n)); }
+
+    async function goToDest(dest){
+      try{
+        const destArray = (typeof dest === "string") ? await pdfDoc.getDestination(dest) : dest;
+        if (!destArray) return;
+        const pageRef = destArray[0];
+        const pageIndex = await pdfDoc.getPageIndex(pageRef);
+        const pageNumber = pageIndex + 1;
+
+        const el = document.getElementById(`page-${pageNumber}`);
+        if (el) el.scrollIntoView({behavior:"smooth", block:"start"});
+      }catch(e){}
+    }
+
+    async function buildLinkLayer(page, viewport, pageEl){
+      const linkLayer = pageEl.querySelector(".linkLayer");
+      linkLayer.innerHTML = "";
+
+      const annots = await page.getAnnotations({ intent: "display" });
+      for (const a of annots){
+        if (a.subtype !== "Link" || !a.rect) continue;
+
+        const rect = viewport.convertToViewportRectangle(a.rect);
+        const left = Math.min(rect[0], rect[2]);
+        const top  = Math.min(rect[1], rect[3]);
+        const width = Math.abs(rect[0] - rect[2]);
+        const height = Math.abs(rect[1] - rect[3]);
+
+        const link = document.createElement("a");
+        link.style.left = `${left}px`;
+        link.style.top = `${top}px`;
+        link.style.width = `${width}px`;
+        link.style.height = `${height}px`;
+
+        // روابط خارجية
+        const url = a.url || a.unsafeUrl;
+        if (url){
+          link.href = url;
+          link.target = "_blank";
+          link.rel = "noopener";
+        } else if (a.dest){
+          // تنقل داخلي
+          link.href = "#";
+          link.addEventListener("click", (ev) => {
+            ev.preventDefault();
+            goToDest(a.dest);
+          });
+        } else {
+          // لا شيء معروف
+          link.href = "#";
+        }
+
+        linkLayer.appendChild(link);
+      }
+    }
+
+    async function renderPage(i){
+      const page = await pdfDoc.getPage(i);
+
+      const vp1 = page.getViewport({ scale: 1 });
+      const scale = (baseScale * userZoom);
+
+      const viewport = page.getViewport({ scale });
+      const pageEl = document.getElementById(`page-${i}`);
+      const canvas = pageEl.querySelector("canvas");
+      const ctx = canvas.getContext("2d", { alpha: false });
+
+      canvas.width = Math.floor(viewport.width);
+      canvas.height = Math.floor(viewport.height);
+
+      pageEl.style.width = `${Math.floor(viewport.width)}px`;
+
+      await page.render({ canvasContext: ctx, viewport }).promise;
+      await buildLinkLayer(page, viewport, pageEl);
+    }
+
+    async function renderAll(){
+      if (rendering) return;
+      rendering = true;
+
+      viewer.innerHTML = "";
+      const frag = document.createDocumentFragment();
+
+      for (let i=1; i<=pdfDoc.numPages; i++){
+        const pageEl = document.createElement("div");
+        pageEl.className = "page";
+        pageEl.id = `page-${i}`;
+        pageEl.innerHTML = `<canvas></canvas><div class="linkLayer"></div>`;
+        frag.appendChild(pageEl);
+      }
+      viewer.appendChild(frag);
+
+      // حساب الملاءمة اعتمادًا على الصفحة الأولى فقط (لتثبيت الزوم وعدم تغيّره بين الصفحات)
+      const first = await pdfDoc.getPage(1);
+      baseScale = computeBaseScale(first.getViewport({ scale: 1 }));
+
+      // أرسم الصفحة الأولى فورًا ثم أكمل الباقي لتسريع الإحساس بالتحميل
+      await renderPage(1);
+      for (let i=2; i<=pdfDoc.numPages; i++){
+        // تأخير بسيط حتى لا يتجمّد الجوال
+        await new Promise(r => setTimeout(r, 0));
+        await renderPage(i);
+      }
+
+      // عداد صفحات أثناء التمرير
+      const pages = [...document.querySelectorAll(".page")];
+      const io = new IntersectionObserver((entries) => {
+        const vis = entries.filter(e=>e.isIntersecting).sort((a,b)=>b.intersectionRatio-a.intersectionRatio)[0];
+        if (vis){
+          const id = vis.target.id || "";
+          const n = Number(id.replace("page-","")) || 1;
+          pageMeta.textContent = `الصفحة ${n} من ${pdfDoc.numPages}`;
+        }
+      }, { root:null, threshold:[0.55] });
+
+      pages.forEach(p=>io.observe(p));
+
+      setActiveButtons();
+      rendering = false;
+    }
+
+    async function load(){
+      try{
+        pdfDoc = await pdfjsLib.getDocument({ url: PDF_URL }).promise;
+        pageMeta.textContent = `الصفحة 1 من ${pdfDoc.numPages}`;
+        await renderAll();
+      }catch(e){
+        viewer.innerHTML = `<div class="loading">تعذّر تحميل الملف. تأكدي من وجود <b>portfolio.pdf</b> في نفس المجلد.</div>`;
+      }finally{
+        loading?.remove();
+      }
+    }
+
+    // أزرار الملاءمة/الزوم
+    fitPageBtn.addEventListener("click", async () => {
+      mode = "page-fit";
+      userZoom = 1;
+      setActiveButtons();
+      await renderAll();
+    });
+
+    fitWidthBtn.addEventListener("click", async () => {
+      mode = "page-width";
+      userZoom = 1;
+      setActiveButtons();
+      await renderAll();
+    });
+
+    zoomInBtn.addEventListener("click", async () => {
+      mode = "manual";
+      userZoom = clamp(userZoom * 1.1, 0.5, 3);
+      setActiveButtons();
+      await renderAll();
+    });
+
+    zoomOutBtn.addEventListener("click", async () => {
+      mode = "manual";
+      userZoom = clamp(userZoom / 1.1, 0.5, 3);
+      setActiveButtons();
+      await renderAll();
+    });
+
+    // إعادة حساب الملاءمة عند تغيّر مقاس الشاشة
+    let resizeTimer = null;
+    window.addEventListener("resize", () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        if (!pdfDoc) return;
+        if (mode === "page-fit" || mode === "page-width"){
+          userZoom = 1;
+          renderAll();
+        }
+      }, 250);
+    });
+
+    load();
+  </script>
 </body>
 </html>
