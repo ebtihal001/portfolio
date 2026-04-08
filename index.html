@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<<<<<<< HEAD
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Ebtihal Rashed — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0a0a0a;
+  --accent:#8b5cf6;
+  --accent2:#6d28d9;
+  --text:#e0e0e0;
+  --muted:#888;
+}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Outfit',sans-serif;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+
+/* NAV */
+.nav{
+  position:fixed;
+  bottom:20px;
+  left:50%;
+  transform:translateX(-50%);
+  z-index:100;
+  display:flex;
+  gap:4px;
+  background:rgba(20,20,20,0.9);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  border:1px solid rgba(139,92,246,0.25);
+  border-radius:40px;
+  padding:6px 8px;
+}
+.nav a{
+  color:var(--muted);
+  text-decoration:none;
+  font-size:11px;
+  font-weight:500;
+  padding:8px 12px;
+  border-radius:30px;
+  transition:all .3s;
+  white-space:nowrap;
+  letter-spacing:0.3px;
+}
+.nav a:hover,.nav a.active{
+  color:#fff;
+  background:var(--accent2);
+}
+
+/* SECTIONS */
+.section{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  padding:0;
+}
+.section img{
+  width:100%;
+  max-width:430px;
+  display:block;
+  margin:0 auto;
+}
+
+/* BACK TO TOP */
+.top-btn{
+  position:fixed;
+  top:16px;
+  left:16px;
+  z-index:100;
+  width:40px;height:40px;
+  border-radius:50%;
+  background:rgba(20,20,20,0.85);
+  backdrop-filter:blur(8px);
+  border:1px solid rgba(139,92,246,0.3);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;
+  opacity:0;
+  transition:opacity .3s;
+}
+.top-btn.show{opacity:1}
+.top-btn svg{width:18px;height:18px;stroke:var(--accent);stroke-width:2;fill:none}
+
+/* Loading */
+.loader{
+  position:fixed;inset:0;
+  background:var(--bg);
+  display:flex;align-items:center;justify-content:center;
+  z-index:200;
+  transition:opacity .5s;
+}
+.loader.hide{opacity:0;pointer-events:none}
+.loader-ring{
+  width:40px;height:40px;
+  border:3px solid rgba(139,92,246,0.15);
+  border-top-color:var(--accent);
+  border-radius:50%;
+  animation:spin .8s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* PAGE PADDING */
+.spacer{height:80px}
+</style>
+</head>
+<body>
+
+<div class="loader" id="loader"><div class="loader-ring"></div></div>
+
+<button class="top-btn" id="topBtn" onclick="window.scrollTo({top:0})">
+  <svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>
+</button>
+
+<nav class="nav">
+  <a href="#about">About</a>
+  <a href="#experience">Experience</a>
+  <a href="#projects">Projects</a>
+  <a href="#designs">Designs</a>
+  <a href="#contact">Contact</a>
+</nav>
+
+<!-- COVER -->
+<div class="section" id="cover">
+  <img src="images/page-01.jpg" alt="Cover" loading="eager">
+</div>
+
+<!-- ABOUT -->
+<div class="section" id="about">
+  <img src="images/page-03.jpg" alt="About - Impact Comes First" loading="lazy">
+  <img src="images/page-04.jpg" alt="Skills" loading="lazy">
+  <img src="images/page-05.jpg" alt="Interests" loading="lazy">
+  <img src="images/page-06.jpg" alt="Education" loading="lazy">
+</div>
+
+<!-- EXPERIENCE -->
+<div class="section" id="experience">
+  <img src="images/page-07.jpg" alt="Career Path" loading="lazy">
+  <img src="images/page-08.jpg" alt="Worked With" loading="lazy">
+</div>
+
+<!-- PROJECTS -->
+<div class="section" id="projects">
+  <img src="images/page-09.jpg" alt="Project Management" loading="lazy">
+  <img src="images/page-10.jpg" alt="Project Details" loading="lazy">
+  <img src="images/page-11.jpg" alt="Event Photos" loading="lazy">
+  <img src="images/page-12.jpg" alt="Project 2" loading="lazy">
+  <img src="images/page-13.jpg" alt="Project Photos" loading="lazy">
+</div>
+
+<!-- DESIGNS -->
+<div class="section" id="designs">
+  <img src="images/page-14.jpg" alt="Designs Menu" loading="lazy">
+  <img src="images/page-15.jpg" alt="Visual Identities" loading="lazy">
+  <img src="images/page-16.jpg" alt="Design Work" loading="lazy">
+  <img src="images/page-17.jpg" alt="Poster Design" loading="lazy">
+  <img src="images/page-18.jpg" alt="Poster Design 2" loading="lazy">
+  <img src="images/page-19.jpg" alt="Magazine" loading="lazy">
+  <img src="images/page-20.jpg" alt="Book Design" loading="lazy">
+  <img src="images/page-21.jpg" alt="Story Design" loading="lazy">
+  <img src="images/page-22.jpg" alt="Book Design 2" loading="lazy">
+  <img src="images/page-23.jpg" alt="Design Work" loading="lazy">
+  <img src="images/page-24.jpg" alt="Design Work" loading="lazy">
+  <img src="images/page-25.jpg" alt="Design Work" loading="lazy">
+  <img src="images/page-26.jpg" alt="Design Work" loading="lazy">
+  <img src="images/page-27.jpg" alt="Design Work" loading="lazy">
+  <img src="images/page-28.jpg" alt="Studio Result" loading="lazy">
+  <img src="images/page-29.jpg" alt="Studio Result 2" loading="lazy">
+  <img src="images/page-30.jpg" alt="Studio Result 3" loading="lazy">
+</div>
+
+<!-- CONTACT -->
+<div class="section" id="contact">
+  <img src="images/page-31.jpg" alt="Contact" loading="lazy">
+</div>
+
+<div class="spacer"></div>
+
+<script>
+// Loader
+window.addEventListener('load',()=>{
+  document.getElementById('loader').classList.add('hide');
+});
+
+// Top button
+const topBtn=document.getElementById('topBtn');
+window.addEventListener('scroll',()=>{
+  topBtn.classList.toggle('show',window.scrollY>600);
+},{passive:true});
+
+// Active nav
+const sections=document.querySelectorAll('.section[id]');
+const navLinks=document.querySelectorAll('.nav a');
+const observer=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      navLinks.forEach(l=>l.classList.remove('active'));
+      const link=document.querySelector(`.nav a[href="#${e.target.id}"]`);
+      if(link)link.classList.add('active');
+    }
+  });
+},{threshold:0.3});
+sections.forEach(s=>observer.observe(s));
+</script>
+=======
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Portfolio</title>
+  <style>
+    body{margin:0;background:#0b0b0b;color:#fff;font-family:system-ui,-apple-system,Segoe UI,Arial}
+    .topbar{
+      position:sticky; top:0; z-index:10;
+      display:flex; gap:10px; align-items:center; justify-content:space-between;
+      padding:12px 12px;
+      background:rgba(11,11,11,.92);
+      backdrop-filter: blur(10px);
+      border-bottom:1px solid rgba(255,255,255,.08);
+    }
+    .title{font-weight:600; opacity:.95}
+    .actions{display:flex; gap:10px; flex-wrap:wrap}
+    a.btn{
+      background:#6d4cff; color:#fff; text-decoration:none;
+      padding:10px 12px; border-radius:12px; display:inline-block;
+      font-weight:600; font-size:14px;
+    }
+    a.btn.secondary{background:rgba(255,255,255,.10); font-weight:500}
+
+    .viewer{
+      height: calc(100vh - 56px);
+      width:100%;
+      border:0;
+      display:block;
+    }
+
+    .loading{
+      position:fixed; inset:56px 0 0 0;
+      display:flex; align-items:center; justify-content:center;
+      background:#0b0b0b;
+      color:rgba(255,255,255,.75);
+      font-size:14px;
+      pointer-events:none;
+    }
+    .dot{animation: blink 1.2s infinite}
+    .dot:nth-child(2){animation-delay:.2s}
+    .dot:nth-child(3){animation-delay:.4s}
+    @keyframes blink{0%,100%{opacity:.2}50%{opacity:1}}
+
+    /* مربع التعليمات */
+    .tip{
+      position:fixed; left:12px; right:12px; bottom:12px; z-index:20;
+      background:rgba(20,20,20,.92);
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:14px;
+      padding:10px 12px;
+      font-size:12.5px;
+      line-height:1.6;
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      justify-content:space-between;
+    }
+    .tip b{color:#fff}
+    .tip button{
+      background:transparent;border:0;color:#fff;opacity:.8;
+      font-size:16px;cursor:pointer;padding:2px 6px
+    }
+  </style>
+</head>
+<body>
+
+  <div class="topbar">
+    <div class="title">Portfolio</div>
+
+    <div class="actions">
+      <!-- زر ملاءمة الصفحة (Fit Page) -->
+      <a class="btn secondary" id="fitBtn" href="#">ملاءمة الصفحة</a>
+
+      <!-- فتح في تبويب جديد (قد يفتح في Acrobat حسب إعداد جهاز المستخدم) -->
+      <a class="btn" href="portfolio.pdf#page=1&view=Fit" target="_blank" rel="noopener">فتح</a>
+
+      <!-- تحميل -->
+      <a class="btn secondary" href="portfolio.pdf" download>تحميل</a>
+    </div>
+  </div>
+
+  <div class="loading" id="loading">
+    جارٍ تحميل الملف<span class="dot">.</span><span class="dot">.</span><span class="dot">.</span>
+  </div>
+
+  <!-- عرض عادي داخل الصفحة -->
+  <iframe
+    id="pdf"
+    class="viewer"
+    src="portfolio.pdf#page=1&view=Fit"
+    title="Portfolio PDF"
+    onload="document.getElementById('loading').style.display='none';">
+  </iframe>
+
+  <!-- تعليمات مع زر إغلاق -->
+  <div class="tip" id="tip">
+    <div>
+      إذا لم يظهر العرض على <b>ملاءمة الصفحة</b> أو تغيّر مستوى التكبير أثناء التنقّل، يرجى الضغط على زر <b>«ملاءمة الصفحة»</b> أعلى الصفحة.
+      <br>
+      <b>لتفعيل العناصر التفاعلية</b> (مثل أزرار التنقّل)، يرجى فتح الملف عبر <b>Adobe Acrobat</b>.
+    </div>
+    <button aria-label="إغلاق" onclick="document.getElementById('tip').style.display='none'">✕</button>
+  </div>
+
+  <script>
+    // إعادة تحميل الملف مع Fit Page عند الضغط على "ملاءمة الصفحة"
+    document.getElementById('fitBtn').addEventListener('click', (e) => {
+      e.preventDefault();
+      const f = document.getElementById('pdf');
+      document.getElementById('loading').style.display = 'flex';
+      f.src = "portfolio.pdf#page=1&view=Fit";
+    });
+  </script>
+
+>>>>>>> 9cb86aff2aad79d2a8e6779fe71cbe0ca49dafc5
+</body>
+</html>
